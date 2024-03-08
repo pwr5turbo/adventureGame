@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AdventureGame
 {
-    internal class Encounters
+    public class Encounters
     {
         static Random rand = new Random();
         // Encounter Generic

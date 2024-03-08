@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdventureGame
 {
-    internal class Player
+    public class Player
     {
         static Random rand = new Random();
 
