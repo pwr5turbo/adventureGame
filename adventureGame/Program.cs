@@ -12,7 +12,7 @@ namespace AdventureGame
         static void Main(string[] args) 
         {
             Start();
-
+            Encounters.FirstEncounter();
         }
 
 
@@ -21,8 +21,10 @@ namespace AdventureGame
             do
             {
                 Console.WriteLine("Labyrinth of Shadows!");
-                Console.WriteLine("What is you name: ");
+                Console.WriteLine("What is your name: ");
                 currentPlayer.name = Console.ReadLine();
+                if (currentPlayer.name == "")
+                    Console.Clear();
             } while (currentPlayer.name == "");
             Console.Clear();
 

@@ -14,5 +14,6 @@ namespace AdventureGame
         public int damage = 1;
         public int armorValue = 0;
         public int potion = 5;
+        public int weaponValue = 1;
     }
 }
