@@ -8,16 +8,40 @@ namespace AdventureGame
 {
     internal class Combat
     {
+        static Random rand = new Random();
         public static void Battle(bool random, string name, int power, int health)
         {
+            static int GetStatsP()
+            {
+                // voor de power stat
+                int upper = (2 * Program.currentPlayer.mods + 4);
+                int lower = (Program.currentPlayer.mods + 1);
+                return rand.Next(lower, upper);
+            }
+            static int GetStatsH()
+            {
+                //voor de health stat
+                int upper = (2 * Program.currentPlayer.mods + 6);
+                int lower = (Program.currentPlayer.mods + 1);
+                return rand.Next(lower, upper);
+            }
+            static void GetCoins()
+            {
+                int lower = 10 + (10 * Program.currentPlayer.mods);
+                int upper = 50 + (10 * Program.currentPlayer.mods);
+                int c = rand.Next(lower, upper);
+                Program.currentPlayer.coins += c;
+                Console.WriteLine("you gain: " + c + " gold.");
+            }
+
             string n = "";
             int p = 0;
             int h = 0;
             if (random)
             {
                 n = Names.GetName();
-                p = Program.currentPlayer.GetStatsP();
-                h = Program.currentPlayer.GetStatsH();
+                p = GetStatsP();
+                h = GetStatsH();
             }
             else
             {
@@ -49,6 +73,8 @@ namespace AdventureGame
 
                     Program.currentPlayer.health -= damage;
                     h -= attack;
+
+                    Console.ReadKey();
                 }
                 else if (input.ToLower() == "d" || input.ToLower() == "defend")
                 {
@@ -63,6 +89,8 @@ namespace AdventureGame
 
                     Program.currentPlayer.health -= damage;
                     h -= attack;
+
+                    Console.ReadKey();
                 }
                 else if (input.ToLower() == "r" || input.ToLower() == "run")
                 {
@@ -72,6 +100,7 @@ namespace AdventureGame
                         int damage = p - Program.currentPlayer.armorValue;
                         if (damage < 0)
                             damage = 0;
+                        Program.currentPlayer.health -= damage;
 
                         Console.WriteLine("As you try to run away " + n + " strikes you!");
                         Console.WriteLine("You lose " + damage + " healt and are unable to escape!");
@@ -81,7 +110,7 @@ namespace AdventureGame
                     {
                         Console.WriteLine("Succesfully escape the " + n + "!");
                         Console.ReadKey();
-                        // go to store
+                        Shop.loadShop(Program.currentPlayer);
                     }
                 }
                 else if (input.ToLower() == "h" || input.ToLower() == "heal")
@@ -94,6 +123,8 @@ namespace AdventureGame
                         if (damage < 0)
                             damage = 0;
                         Console.WriteLine(n + "attacks you while you try to find a potion.");
+
+                        Console.ReadKey();
                     }
                     else
                     {
@@ -107,6 +138,8 @@ namespace AdventureGame
                             damage = 0;
                         Console.WriteLine(n + " Attacks you while you are healing.");
                         Console.WriteLine("You lose " + damage + " health.");
+
+                        Console.ReadKey();
                     }
                 }
                 if (Program.currentPlayer.health <= 0)
@@ -118,15 +151,22 @@ namespace AdventureGame
                     System.Environment.Exit(0);
                 }
             }
+            Console.Clear();
             Console.BackgroundColor = ConsoleColor.Green;
             Console.WriteLine("You defeated " + n);
-            Console.ReadKey();
             Console.BackgroundColor = ConsoleColor.Black;
-            int c = rand.Next(10, 50);
-            Program.currentPlayer.coins += c;
-            Console.WriteLine("When you defeated the " + n + " his body turns in to a sack of gold!");
-            Console.WriteLine("you gain: " + c + " gold.");
             Console.ReadKey();
+
+            Console.Clear();      
+            Console.WriteLine("When you defeated the " + n + " his body turns in to a sack of gold!");
+            GetCoins();
+
+            Console.WriteLine("Press (S) to go to store.");
+            string inputStore = Console.ReadLine().ToLower();
+            if (inputStore == "s")
+                Shop.loadShop(Program.currentPlayer);
+            else
+                Console.Clear();
         }
     }
 }
