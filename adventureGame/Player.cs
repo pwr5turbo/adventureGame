@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace AdventureGame
 {
-    [Serializable]
     public class Player
     {
         static Random rand = new Random();
 
         public string name;
-        public int id;
+        public int id =0;
         public int coins = 50;        
         public int levelUpXp = 50;
         public int currentLevel = 1;
