@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace AdventureGame
 {
@@ -12,6 +14,10 @@ namespace AdventureGame
         public static bool mainLoop = true;
         static void Main(string[] args) 
         {
+            if(!Directory.Exists("saves"))
+            {
+                Directory.CreateDirectory("saves");
+            }
             Start();
             Encounters.FirstEncounter();
             while (mainLoop)
@@ -47,7 +53,16 @@ namespace AdventureGame
                 "Shadows, or will you become just another lost soul, swallowed by its eternal darkness? The choice is yours... " + currentPlayer.name);
             Console.ReadKey();
             Console.Clear();
-             
+        }
+        public static void save()
+        {
+            BinaryFormatter binForm = new BinaryFormatter();
+            FileStream file = File.Open("saves")
+        }
+
+        public static Player load()
+        {
+
         }
     }
 }
