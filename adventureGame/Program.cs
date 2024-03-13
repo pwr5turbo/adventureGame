@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Linq;
 
 namespace AdventureGame
 {
@@ -12,6 +15,8 @@ namespace AdventureGame
         public static bool mainLoop = true;
         static void Main(string[] args) 
         {
+            if (!Directory.Exists("saves"))
+               Directory.CreateDirectory("saves");
             Start();
             Encounters.FirstEncounter();
             while (mainLoop)
@@ -48,6 +53,20 @@ namespace AdventureGame
             Console.ReadKey();
             Console.Clear();
              
+        }
+
+        public static void save()
+        {
+            BinaryFormatter binForm = new BinaryFormatter();
+            string path = "saves/" + currentPlayer.id.ToString();
+            FileStream file = File.Open(path, FileMode.OpenOrCreate);
+            binForm.Serialize(file, currentPlayer);
+            file.Close();
+        }
+
+        public static Player load()
+        {
+
         }
     }
 }

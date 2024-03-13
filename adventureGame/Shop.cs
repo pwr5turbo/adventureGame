@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -17,7 +18,7 @@ namespace AdventureGame
         {
             runShop(p);
         }
-        
+
         public static void runShop(Player p)
         {
             int potionP;
@@ -25,10 +26,10 @@ namespace AdventureGame
             int weaponP;
             int difP;
 
-            while (true) 
+            while (true)
             {
                 potionP = 20 + (10 * p.mods);
-                armorP = 100 * (p.armorValue +1);
+                armorP = 100 * (p.armorValue + 1);
                 weaponP = 100 * p.weaponValue;
                 difP = 300 + (100 * p.mods);
 
@@ -36,22 +37,27 @@ namespace AdventureGame
                 Console.Clear();
                 Console.WriteLine("        Shop         ");
                 Console.WriteLine("=======================");
-                Console.WriteLine("|  (W)eapon:    $" + weaponP);
+                Console.WriteLine("|  (W)eapon:     $" + weaponP);
                 Console.WriteLine("|  (A)rmor:      $" + armorP);
-                Console.WriteLine("|  (P)otion:     $" + potionP);                
-                Console.WriteLine("|  (D)ifficulty: $" + difP);
+                Console.WriteLine("|  (P)otion:     $" + potionP);
+                Console.WriteLine("|  (F)loor up:   $" + difP);
                 Console.WriteLine("|  (E)xit");
                 Console.WriteLine("=======================");
-                Console.WriteLine("Coins: " + p.coins +"\n");
+                Console.WriteLine("Coins       : " + p.coins);
+                Console.WriteLine("Skill points: " + p.skillpoints + "\n");
 
                 Console.WriteLine("        Stats        ");
                 Console.WriteLine("=======================");
                 Console.WriteLine("|  current Health: " + p.health);
+                Console.WriteLine("|  (H)Max Health : " + p.maxHealth);
+                Console.WriteLine("|  (D)amage value: " + p.playerDamage);
                 Console.WriteLine("|  Weapon   value: " + p.weaponValue);
                 Console.WriteLine("|  Armor    value: " + p.armorValue);
                 Console.WriteLine("|  Potion   value: " + p.potion);
-                Console.WriteLine("|  Diff     value: " + p.mods);
+                Console.WriteLine("|  Current  floor: " + p.mods);
+                Console.WriteLine("|  Monster  kills: " + p.monsterSlays);
                 Console.WriteLine("=======================");
+                
                 //wait for input
                 string input = Console.ReadLine().ToLower();
 
@@ -63,16 +69,26 @@ namespace AdventureGame
                 else if (input == "a" || input == "armor")
                 {
                     tryBuy("armor", armorP, p);
-                    Console.WriteLine("You bought a new weapon current coins: " + p.coins);
+                    Console.WriteLine("You bought new armor current coins: " + p.coins);
                 }
                 else if (input == "p" || input == "potion")
                 {
                     tryBuy("potion", potionP, p);
-                    Console.WriteLine("You bought a new weapon current coins: " + p.coins);
+                    Console.WriteLine("You bought a potion current coins: " + p.coins);
                 }
-                else if (input == "d" || input == "difficulty")
+                else if (input == "f" || input == "floor up")
                 {
                     tryBuy("dif", difP, p);
+                    Console.WriteLine("You bought a key to the next floor current coins: " + p.coins);
+                }
+                else if (input == "h" || input == "health")
+                {
+                    tryUpgrade("health", 1, p);
+                    Console.WriteLine("You bought a new weapon current coins: " + p.coins);
+                }
+                else if (input == "d" || input == "damage")
+                {
+                    tryUpgrade("damage", 1, p);
                     Console.WriteLine("You bought a new weapon current coins: " + p.coins);
                 }
                 else if (input == "e" || input == "exit")
@@ -80,7 +96,7 @@ namespace AdventureGame
 
                 static void tryBuy(string item, int cost, Player p)
                 {
-                    if(p.coins >= cost)
+                    if (p.coins >= cost)
                     {
                         if (item == "potion")
                             p.potion++;
@@ -99,7 +115,28 @@ namespace AdventureGame
                         Console.ReadKey();
                     }
                 }
+                static void tryUpgrade(string skill, int skillcost, Player p)
+                {
+                    if (p.skillpoints >= 1)
+                    {
+                        if (skill == "health")
+                        {
+                            p.maxHealth++;
+                            p.health++;
+                        }                            
+                        else if (skill == "damage")
+                            p.playerDamage++;
+
+                        p.skillpoints -= 1;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You don't have enough skillpoints to upgrade this.");
+                        Console.ReadKey();
+                    }
+                }
             }
         }
     }
 }
+
