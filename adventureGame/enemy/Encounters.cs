@@ -26,7 +26,7 @@ namespace AdventureGame
             Console.ReadKey();
             Console.Clear();
 
-            c.Battle2(e);
+            c.battle(e);
         }
         public  void basicEncounter()
         {            
@@ -36,7 +36,7 @@ namespace AdventureGame
             Console.WriteLine(re.OpeningsLine()) ;
             Console.ReadKey();
 
-            c.Battle2(re);                        
+            c.battle(re);                        
         }
         //custom encounters
         public  void mageEncounter()
@@ -46,26 +46,34 @@ namespace AdventureGame
             Console.WriteLine("You almost have no time to react but het attacks.");
             Combat c = new Combat(p);
             Enemy e = new Enemy("Possessed mage", 5, 8);
-            c.Battle2(e);
+            c.battle(e);
             Console.WriteLine("As you defeated the otherworldly being leaves his body.");
             Console.WriteLine("Before he breathe's his last breath he thanks you for defeating him");
             Console.WriteLine("And warns you for the Labyrinth of Shadows");
         }
 
-        public  void TankEnemy()
-        {
-            Combat c = new Combat(p);
+        public void TankEnemy()
+        {            
             TankEnemy e = new TankEnemy();
-
+            Combat c = new Combat(p);
             Console.WriteLine(e.OpeningsLine());
 
-            c.Battle2(e);
+            Console.ReadKey();
+            Console.Clear();
 
+            c.battle(e);
         }
 
         public  void BlitzEnemy()
         {
-            Console.WriteLine("You drop down the stairs and you see a ");
+            BlitzEnemy e = new BlitzEnemy();
+            Combat c = new Combat(p);
+            Console.WriteLine(e.OpeningsLine());
+
+            Console.ReadKey();
+            Console.Clear();
+
+            c.battle(e);
         }
 
 

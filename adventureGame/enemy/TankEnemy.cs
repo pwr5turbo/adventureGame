@@ -1,40 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AdventureGame.enemy
 {
-
     public class TankEnemy : Enemy
     {
+        public int Armor { get; private set; }
 
-        public int armor = 0;
-        public TankEnemy(int power = 1, int health = 12, int armor = 2) : base("", power, health)
+        public TankEnemy(int power = 1, int health = 25, int armor = 5) : base("", power, health)
         {
             this.name = "Armoured Beast";
-            this.armor = armor;
+            this.Armor = armor;
         }
 
         public string OpeningsLine()
         {
-            return "As you strumble to the labrint you take a look around the corner.\r\n " +
-                    "You find an armored beast.\r\n" +
-                    "This enemy has armor and you need to take his armor out before you can damage him.\r\n";
+            return "As you stumble into the labyrinth, you take a look around the corner.\r\n" +
+                   "You find an armored beast.\r\n" +
+                   "This enemy has armor, and you need to deplete it before you can damage him.\r\n";
         }
-        public new void DamageTaken(int damage)
+        public string DefeatLine()
         {
-            damage -= armor ;
-            if (damage < 0)
+            return "You defeated the Armoured Beast. \r\n" +
+                   "You went a floor up \r\n"+
+                   "You are now on floor 6 \r\n"+
+                   Console.ReadKey();
+                   
+
+        }
+        public override void DamageTaken(int damage)
+        {
+            int actualDamage = damage - Armor;
+            if (actualDamage > 0)
             {
-                base.DamageTaken(damage);
+                base.DamageTaken(actualDamage);
             }
         }
-        public new string Status()
-        {
-            return base.Status() + " armor: " + armor;
-        }
 
+        public override string Status()
+        {
+            return base.Status() + " armor: " + Armor;
+        }
     }
 }

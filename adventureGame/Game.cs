@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AdventureGame.enemy;
 
 namespace AdventureGame
 {
@@ -43,10 +44,24 @@ namespace AdventureGame
 
             Encounters e = new Encounters();
             e.p = currentPlayer;
-           e.FirstEncounter();
+            e.FirstEncounter();
             while (mainLoop)
             {
-              e.randomEncounter();
+               
+                if(currentPlayer.mods == 5)
+                {
+                    e.TankEnemy();
+                    currentPlayer.mods++;
+                }
+                else if(currentPlayer.mods == 10)
+                {
+                    e.BlitzEnemy();
+                    currentPlayer.mods++;
+                }
+                else
+                {
+                    e.randomEncounter();
+                }
             }
         }
 

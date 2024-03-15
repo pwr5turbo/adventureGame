@@ -25,10 +25,9 @@ namespace AdventureGame
             while (true)
             {
                 potionP = 20 + (10 * currentPlayer.mods);
-                armorP = 100 * (currentPlayer.armorValue + 1);
+                armorP = 100 * (currentPlayer.armorValue);
                 weaponP = 100 * currentPlayer.weaponValue;
                 difP = 300 + (100 * currentPlayer.mods);
-
 
                 Console.Clear();
                 Console.WriteLine("        Shop         ");
@@ -61,31 +60,50 @@ namespace AdventureGame
                 {
                     tryBuy("weapon", weaponP);
                     Console.WriteLine("You bought a new weapon current coins: " + currentPlayer.coins);
+                    Console.ReadKey();
                 }
                 else if (input == "a" || input == "armor")
                 {
                     tryBuy("armor", armorP);
                     Console.WriteLine("You bought new armor current coins: " + currentPlayer.coins);
+                    Console.ReadKey();
                 }
                 else if (input == "p" || input == "potion")
                 {
                     tryBuy("potion", potionP);
                     Console.WriteLine("You bought a potion current coins: " + currentPlayer.coins);
+                    Console.ReadKey();
                 }
                 else if (input == "f" || input == "floor up")
                 {
-                    tryBuy("dif", difP);
-                    Console.WriteLine("You bought a key to the next floor current coins: " + currentPlayer.coins);
+                    if(currentPlayer.mods == 4)
+                    {
+                        Console.WriteLine("do you want to upgrade floor up after this will come a boss battle.");
+                        confirmFloor();
+                    }
+                    else if (currentPlayer.mods == 9) 
+                    {
+                        Console.WriteLine("do you want to upgrade floor up after this will come a boss battle.");
+                        confirmFloor();
+                    }
+                    else
+                    {
+                        tryBuy("dif", difP);
+                        Console.WriteLine("You bought a key to the next floor current coins: " + currentPlayer.coins);
+                        Console.ReadKey();
+                    }                    
                 }
                 else if (input == "h" || input == "health")
                 {
                     tryUpgrade("health", 1);
-                    Console.WriteLine("You bought a new weapon current coins: " + currentPlayer.coins);
+                    Console.WriteLine("You upgraded a skill: " + currentPlayer.skillpoints);
+                    Console.ReadKey();
                 }
                 else if (input == "d" || input == "damage")
                 {
                     tryUpgrade("damage", 1);
-                    Console.WriteLine("You bought a new weapon current coins: " + currentPlayer.coins);
+                    Console.WriteLine("You upgraded a skill: " + currentPlayer.skillpoints);
+                    Console.ReadKey();
                 }
                 else if (input == "e" || input == "exit")
                     break;
@@ -133,6 +151,19 @@ namespace AdventureGame
             else
             {
                 Console.WriteLine("You don't have enough skillpoints to upgrade this.");
+                Console.ReadKey();
+            }
+        }
+        private void confirmFloor()
+        {
+            int difP = 300 + (100 * currentPlayer.mods);
+
+            Console.WriteLine("Press F to floor up");
+            string confirm = Console.ReadLine();
+            if (confirm == "f")
+            {
+                tryBuy("dif", difP);
+                Console.WriteLine("You bought a key to the next floor current coins: " + currentPlayer.coins);
                 Console.ReadKey();
             }
         }
