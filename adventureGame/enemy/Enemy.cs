@@ -12,6 +12,7 @@ namespace AdventureGame.enemy
         public string name;
         public int power;
         public int health;
+        public int speed;
         
         public string openingsLine = "You open the first door you see a monster.\r\n" +
                     "While you pick up the wooden sword you just found the monster comes charging at you.\r\n";
@@ -23,11 +24,19 @@ namespace AdventureGame.enemy
             return openingsLine;
         }
 
-        public Enemy(string name, int power, int health)
+        public virtual void DefeatLine(string name)
+        {            
+            Console.BackgroundColor = ConsoleColor.Green;
+            Console.WriteLine("You defeated " + name);
+            Console.BackgroundColor = ConsoleColor.Black;            
+        }
+
+        public Enemy(string name, int power, int health, int speed)
         {
             this.name = name;
             this.power = power;
             this.health = health;
+            this.speed = speed;
         }
 
         public virtual void DamageTaken(int damage)
@@ -48,12 +57,14 @@ namespace AdventureGame.enemy
 
         public virtual string Status()
         {
-            return name + " health: " + health + " Power: " + power;
+            if (health < 0) 
+                health = 0; 
+            return name + " health: " + health + " Power: " + power + " speed:" + speed;
         }
 
         public static Enemy CreateRandomEnemy(Player p)
         {
-            Enemy randomE = new Enemy(Names.GetName(), GetStatsP(p), GetStatsH(p));
+            Enemy randomE = new Enemy(Names.GetName(), GetStatsP(p), GetStatsH(p), GetStatsSpeed(p));
             randomE.openingsLine = "You turn the corner and encounter a monster.\r\n";
             return randomE;
         }
@@ -72,7 +83,46 @@ namespace AdventureGame.enemy
             int lower = currentPlayer.mods + 1;
             return rand.Next(lower, upper);
         }
+        private static int GetStatsSpeed(Player currentPlayer)
+        {
+            //voor de health stat
+            int upper = 2 * currentPlayer.mods + 6;
+            int lower = currentPlayer.mods + 1;
+            return rand.Next(lower, upper);
+        }
+        public virtual void GetCoins(string name, Player currentPlayer)
+        {
+            int lower = 10 + (25 * currentPlayer.mods);
+            int upper = 50 + (25 * currentPlayer.mods);
+            int c = rand.Next(lower, upper);
+            currentPlayer.coins += c;
+            Console.WriteLine("When you defeated the " + name + " his body turns in to a sack of gold!");
+            Console.WriteLine("you gain: " + c + " gold.");
+        }
 
+        public virtual void GetXP(Player currentPlayer)
+        {
+            // creates xp variable
+            int lower = (10 + (25 * currentPlayer.mods));
+            int upper = (30 + (25 * currentPlayer.mods));
+            int xp = rand.Next(lower, upper);
 
+            // adds xp
+            Console.WriteLine("You gain: " + xp + " XP");
+            currentPlayer.levelUpXp -= xp;
+
+            // checks for level up
+            if (currentPlayer.levelUpXp <= 0)
+            {
+                currentPlayer.currentLevel++;
+                Console.WriteLine("Level up you are now level: " + currentPlayer.currentLevel);
+                currentPlayer.levelUpXp += Convert.ToInt32(250 * (Math.Pow(1.2, currentPlayer.currentLevel)));
+                currentPlayer.skillpoints += 3;
+                Console.WriteLine("Ammount of skill points: " + currentPlayer.skillpoints);
+                Console.WriteLine("Ammount of XP for next level up: " + currentPlayer.levelUpXp + " XP");
+            }
+            else
+                Console.WriteLine("Xp to level up: " + currentPlayer.levelUpXp + " XP");
+        }
     }
 }

@@ -46,6 +46,7 @@ namespace AdventureGame
                 Console.WriteLine("|  current Health: " + currentPlayer.health);
                 Console.WriteLine("|  (H)Max Health : " + currentPlayer.maxHealth);
                 Console.WriteLine("|  (D)amage value: " + currentPlayer.playerDamage);
+                Console.WriteLine("|  (S)peed  value: " + currentPlayer.playerSpeed);
                 Console.WriteLine("|  Weapon   value: " + currentPlayer.weaponValue);
                 Console.WriteLine("|  Armor    value: " + currentPlayer.armorValue);
                 Console.WriteLine("|  Potion   value: " + currentPlayer.potion);
@@ -78,13 +79,24 @@ namespace AdventureGame
                 {
                     if(currentPlayer.mods == 4)
                     {
-                        Console.WriteLine("do you want to upgrade floor up after this will come a boss battle.");
+                        Console.WriteLine("do you want to upgrade floor up after this will come a boss battle.");                        
                         confirmFloor();
+                        if (currentPlayer.mods == 5)
+                            break;
                     }
                     else if (currentPlayer.mods == 9) 
                     {
                         Console.WriteLine("do you want to upgrade floor up after this will come a boss battle.");
                         confirmFloor();
+                        if (currentPlayer.mods == 10)
+                            break;
+                    }
+                    else if (currentPlayer.mods == 14)
+                    {
+                        Console.WriteLine("do you want to upgrade floor up after this will come a boss battle.");
+                        confirmFloor();
+                        if (currentPlayer.mods == 15)
+                            break;
                     }
                     else
                     {
@@ -102,6 +114,12 @@ namespace AdventureGame
                 else if (input == "d" || input == "damage")
                 {
                     tryUpgrade("damage", 1);
+                    Console.WriteLine("You upgraded a skill: " + currentPlayer.skillpoints);
+                    Console.ReadKey();
+                }
+                else if (input == "s" || input == "speed")
+                {
+                    tryUpgrade("speed", 1);
                     Console.WriteLine("You upgraded a skill: " + currentPlayer.skillpoints);
                     Console.ReadKey();
                 }
@@ -145,6 +163,8 @@ namespace AdventureGame
                 }
                 else if (skill == "damage")
                     currentPlayer.playerDamage++;
+                else if (skill == "speed")
+                    currentPlayer.playerSpeed++;
 
                 currentPlayer.skillpoints -= 1;
             }

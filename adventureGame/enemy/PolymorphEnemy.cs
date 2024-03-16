@@ -1,35 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AdventureGame.enemy
 {
-    public class TankEnemy : Enemy
+    public class PolymorphEnemy : Enemy
     {
         public int Armor { get; private set; }
+        public int numberMoves { get; private set; }
 
-        public TankEnemy(int power = 1, int health = 25, int speed = 4, int armor = 5) : base("", power, health, speed)
+        public PolymorphEnemy(int power = 1, int health = 25, int speed = 20, int armor = 5, int numberMoves = 3) : base("", power, health, speed)
         {
-            this.name = "Armoured Beast";
+            this.name = "Polymorph";
             this.Armor = armor;
+            this.numberMoves = numberMoves;
         }
 
         public string OpeningsLine()
         {
             return "As you stumble into the labyrinth, you take a look around the corner.\r\n" +
-                   "You find an armored beast.\r\n" +
-                   "This enemy has armor, and you need to deplete it before you can damage him.\r\n";
+                   "You find an Polymorph.\r\n" +
+                   "This enemy has the power of both of the previous bosses.\r\n";
         }
         public override void DefeatLine(string name)
         {
-            Console.WriteLine( "You defeated the Armoured Beast. \r\n" +
-                   "You went a floor up \r\n"+
-                   "You are now on floor 6 \r\n");
-            Console.ReadKey();               
-
+            Console.WriteLine("You defeated the Polymorph. \r\n" +
+                   "You went a floor up \r\n" +
+                   "You are now on floor 16 \r\n");
+            Console.ReadKey();
         }
         public override void DamageTaken(int damage)
         {
@@ -40,9 +40,22 @@ namespace AdventureGame.enemy
             }
         }
 
+        public override string DamageDealt(int damage, Player currentPlayer, string n)
+        {
+            int actualDamage = 0;
+            Random random = new Random();
+            int rand = random.Next(1, numberMoves + 1);
+            for (int i = 0; i < rand; i++)
+            {
+                currentPlayer.health -= damage;
+                actualDamage += damage;
+            }
+            return "The blitzenemy attacks: " + rand + " times and deals: " + actualDamage;
+        }
+
         public override string Status()
         {
-            return base.Status() + " armor: " + Armor;
+            return base.Status() + " armor: " + Armor + " Max moves:" + numberMoves;
         }
 
         public override void GetCoins(string name, Player currentPlayer)

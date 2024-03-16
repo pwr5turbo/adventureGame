@@ -55,7 +55,12 @@ namespace AdventureGame
                 }
                 else if(currentPlayer.mods == 10)
                 {
-                    e.BlitzEnemy();
+                    e.BlitzEnemy();                    
+                    currentPlayer.mods++;
+                }
+                if (currentPlayer.mods == 15)
+                {
+                    e.PolymorphEnemy();                    
                     currentPlayer.mods++;
                 }
                 else

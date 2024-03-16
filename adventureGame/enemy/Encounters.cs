@@ -20,7 +20,7 @@ namespace AdventureGame
         public  void FirstEncounter()
         {
             Combat c = new Combat(p);
-            Enemy e = new Enemy("Goblin", 2, 4);
+            Enemy e = new Enemy("Goblin", 2, 4, 3);
             Console.WriteLine(e.OpeningsLine());
 
             Console.ReadKey();
@@ -45,7 +45,7 @@ namespace AdventureGame
             Console.WriteLine("it is a mage but it looks like he's being controlled by a other being");
             Console.WriteLine("You almost have no time to react but het attacks.");
             Combat c = new Combat(p);
-            Enemy e = new Enemy("Possessed mage", 5, 8);
+            Enemy e = new Enemy("Possessed mage", 5, 8, 5);
             c.battle(e);
             Console.WriteLine("As you defeated the otherworldly being leaves his body.");
             Console.WriteLine("Before he breathe's his last breath he thanks you for defeating him");
@@ -67,6 +67,18 @@ namespace AdventureGame
         public  void BlitzEnemy()
         {
             BlitzEnemy e = new BlitzEnemy();
+            Combat c = new Combat(p);
+            Console.WriteLine(e.OpeningsLine());
+
+            Console.ReadKey();
+            Console.Clear();
+
+            c.battle(e);
+        }
+
+        public void PolymorphEnemy()
+        {
+            PolymorphEnemy e = new PolymorphEnemy();
             Combat c = new Combat(p);
             Console.WriteLine(e.OpeningsLine());
 
