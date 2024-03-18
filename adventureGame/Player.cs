@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace AdventureGame
 {
-    [Serializable]
     public class Player
     {
         static Random rand = new Random();
         //Player info
-        public string name;
-        public int id =0;
+        public string name;        
         public int coins = 0;  
         public int XP = 0;
         public int levelUpXp = 100;

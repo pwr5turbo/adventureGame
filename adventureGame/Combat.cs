@@ -10,6 +10,7 @@ namespace AdventureGame
     internal class Combat
     {
         private Shop s = null;
+        private Game g = null;
         private Random rand = new Random();
 
         Player currentPlayer = null;
@@ -18,6 +19,7 @@ namespace AdventureGame
         {
             currentPlayer = p;
             s = new Shop(currentPlayer);
+            g = new Game();
         }                
         
         private int playerAttack()
@@ -190,12 +192,16 @@ namespace AdventureGame
             e.GetCoins(e.name, currentPlayer);
             e.GetXP(currentPlayer);
 
-            Console.WriteLine("Press (S) to go to store.");
+            Console.WriteLine("Press (S) to go to store.\r\n Press (X) to exit (This also saves the progress.).");
             string inputStore = Console.ReadLine().ToLower();
             if (inputStore == "s")
-            {
                 s.runShop();
+            else if (inputStore == "e")
+            {
+                g.save();
+                System.Environment.Exit(0);
             }
+
             else
                 Console.Clear();
         }

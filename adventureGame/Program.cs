@@ -17,17 +17,21 @@ namespace AdventureGame
                 Directory.CreateDirectory("saves");
 
             Game g = null;
-            //wil  je een nieuw spel.
-            if (1 == 1)
+            Console.WriteLine("(N) Do you want a new game.");
+            Console.WriteLine("(S) Do you want to continue a saved game;");
+            string cont = Console.ReadLine().ToLower();
+            if (cont == "n")
             {
-                g = new Game();
+                g = new Game();                
+            }
+            else if (cont == "s")
+            {
                 // of een bestaand spel inladen
+                Console.WriteLine("give te name of the player.");
+                Console.WriteLine("!Warning this is not capital sensitive.");
+                g = Game.load(Console.ReadLine().ToLower());
             }
-            else
-            {
-                g = Game.load(Console.ReadLine());
-            }
-            g.Start();
+            g.Start(cont);
             // Start();
         }
     }
