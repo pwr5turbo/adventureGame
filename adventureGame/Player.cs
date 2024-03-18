@@ -14,13 +14,14 @@ namespace AdventureGame
         //Player info
         public string name;
         public int id =0;
-        public int coins = 1111111111;        
-        public int levelUpXp = 50;
+        public int coins = 0;  
+        public int XP = 0;
+        public int levelUpXp = 100;
         public int currentLevel = 1;
         public int skillpoints = 0;
         //Player skills
-        public int maxHealth = 11111110;
-        public int health = 15;
+        public int maxHealth = 10;
+        public int health = 10;
         public int playerDamage = 1;
         public int playerSpeed = 3;        
         //Player inventory
@@ -32,9 +33,6 @@ namespace AdventureGame
         
 
         // dificulty kan je kopen in de shop
-        public int mods = 0;
-
-        
-       
+        public int mods = 0;      
     }
 }

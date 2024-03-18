@@ -109,20 +109,32 @@ namespace AdventureGame.enemy
 
             // adds xp
             Console.WriteLine("You gain: " + xp + " XP");
-            currentPlayer.levelUpXp -= xp;
+            currentPlayer.XP += xp;
+            LevelUp(currentPlayer);
+        
+        }
 
+        public void LevelUp(Player currentPlayer)
+        {
+            int levelUp = currentPlayer.levelUpXp - currentPlayer.XP;
+            if (levelUp < 0)
+                levelUp = 0;
             // checks for level up
-            if (currentPlayer.levelUpXp <= 0)
+            if (levelUp == 0)
             {
+                //level up
                 currentPlayer.currentLevel++;
                 Console.WriteLine("Level up you are now level: " + currentPlayer.currentLevel);
-                currentPlayer.levelUpXp += Convert.ToInt32(250 * (Math.Pow(1.2, currentPlayer.currentLevel)));
+
+                // new level up xp
+                currentPlayer.XP -= currentPlayer.levelUpXp;
+                currentPlayer.levelUpXp = Convert.ToInt32(100 * (Math.Pow(1.2, currentPlayer.currentLevel)));                
                 currentPlayer.skillpoints += 3;
                 Console.WriteLine("Ammount of skill points: " + currentPlayer.skillpoints);
-                Console.WriteLine("Ammount of XP for next level up: " + currentPlayer.levelUpXp + " XP");
+                LevelUp(currentPlayer);
             }
             else
-                Console.WriteLine("Xp to level up: " + currentPlayer.levelUpXp + " XP");
+                Console.WriteLine("Xp to level up: " + levelUp + " XP");
         }
     }
 }

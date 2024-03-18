@@ -66,9 +66,9 @@ namespace AdventureGame
         {            
             while (e.IsAlive() )
             {
-                int Damage = damage(e.power);
-                int speed = 1;
-                int attack = playerAttack();                 
+                int Damage = damage(e.power);              
+                int attack = playerAttack();
+                int spd = e.speed;
 
                 Console.Clear();
                 Console.WriteLine(e.Status());
@@ -82,7 +82,7 @@ namespace AdventureGame
                 if (input.ToLower() == "a" || input.ToLower() == "attack")
                 {
                     //attack
-                    if(currentPlayer.playerSpeed >= speed)
+                    if(currentPlayer.playerSpeed >= spd)
                     {
                         // Player attacks first
                         Console.Clear();
